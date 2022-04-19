@@ -1,0 +1,74 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+directive @goField(forceResolver: Boolean, name: String) on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+
+# new directive
+directive @auth on FIELD_DEFINITION
+scalar Any
+
+type User {
+  id: Int!
+  email: String!
+  firstname: String!
+  lastname: String!
+  password: String!
+}
+
+type Category {
+  id: ID!
+  name: String!
+}
+
+type Product {
+  id: ID!
+  name: String!
+  category: Category
+  category_id: Int
+}
+
+input InputUser {
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+}
+
+input InputCategory {
+  name: String!
+}
+
+input InputProduct {
+  name: String!
+  categoryId: ID!
+}
+
+# Pagination 
+type PageInfo {
+  startCursor: ID!
+  endCursor: ID!
+  hasNextPage: Boolean
+}
+
+type AuthOps {
+  login(email: String!, password: String!): Any! @goField(forceResolver: true)
+  register(input: InputUser!): Any! @goField(forceResolver: true)
+}
+
+type Query {
+  user(id: ID!): User! @goField(forceResolver: true)
+  # Add Protected Resource
+  protected: String! @goField(forceResolver: true) @auth
+  products(search: String, categoryId: ID): [Product!] @auth
+  categories(search: String): [Category!] @auth
+}
+
+type Mutation {
+  auth: AuthOps! @goField(forceResolver: true)
+  addCategory(category: InputCategory!): Any! @auth
+  editCategory(category: InputCategory!, categoryId: ID!): Any! @auth
+  deleteCategory(id: ID!): Any! @auth
+  addProduct(product: InputProduct!): Any! @auth
+  editProduct(product: InputProduct!, productId: ID!): Any! @auth
+  deleteProduct(id: ID!): Any! @auth
+}
