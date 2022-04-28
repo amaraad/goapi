@@ -4,9 +4,12 @@ import (
 	"context"
 	"goapi/config"
 	"goapi/graph/model"
+	"log"
 )
 
 var success = "OK"
+
+type authString string
 
 func AddCategory(ctx context.Context, category model.InputCategory) (interface{}, error) {
 	db := config.GetDB()
@@ -43,6 +46,8 @@ func DeleteCategory(ctx context.Context, id int64) (interface{}, error) {
 }
 
 func Categories(ctx context.Context, search *string) ([]*model.Category, error) {
+	tokenStr := CtxValue(ctx)
+	log.Print(&tokenStr)
 	db := config.GetDB()
 	var categories []*model.Category
 	if search != nil {

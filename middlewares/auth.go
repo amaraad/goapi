@@ -7,6 +7,7 @@ import (
 )
 
 type authString string
+type custom_error string
 
 func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -22,8 +23,9 @@ func AuthMiddleware(next http.Handler) http.Handler {
 		// log.Printf(auth)
 		validate, err := service.JwtValidate(context.Background(), auth)
 		if err != nil || !validate.Valid {
-			// http.Error(w, "Invalid token", http.StatusForbidden)
-			// return
+			var custom_error = "{\"errors\": [{\"message\": \"Access token expired\"}],\"data\":null}"
+			w.Write([]byte(custom_error))
+			return
 		}
 
 		customClaim, _ := validate.Claims.(*service.JwtCustomClaim)

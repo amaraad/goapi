@@ -59,3 +59,8 @@ func UserLogin(ctx context.Context, email string, password string) (interface{},
 		"token": token,
 	}, nil
 }
+
+func CtxValue(ctx context.Context) *JwtCustomClaim {
+	raw, _ := ctx.Value(authString("auth")).(*JwtCustomClaim)
+	return raw
+}
