@@ -10,7 +10,7 @@ func AddProduct(ctx context.Context, product model.InputProduct) (interface{}, e
 	db := config.GetDB()
 	prod := model.Product{}
 	prod.Name = product.Name
-	prod.Category.ID = product.CategoryID
+	prod.CategoryID = &product.CategoryID
 	if err := db.Create(&prod).Error; err != nil {
 		return nil, err
 	} else {
@@ -23,7 +23,7 @@ func EditProduct(ctx context.Context, product model.InputProduct, productID int6
 	prod := model.Product{}
 	db.First(&prod, productID)
 	prod.Name = product.Name
-	prod.Category.ID = product.CategoryID
+	prod.CategoryID = &product.CategoryID
 	if err := db.Save(&prod).Error; err != nil {
 		return nil, err
 	} else {
