@@ -65,10 +65,10 @@ type Query {
 
 type Mutation {
   auth: AuthOps! @goField(forceResolver: true)
-  addCategory(category: InputCategory!): Any! @auth
-  editCategory(category: InputCategory!, categoryId: ID!): Any! @auth
-  deleteCategory(id: ID!): Any! @auth
-  addProduct(product: InputProduct!): Any! @auth
-  editProduct(product: InputProduct!, productId: ID!): Any! @auth
-  deleteProduct(id: ID!): Any! @auth
+  addCategory(category: InputCategory!): Any!
+  editCategory(category: InputCategory!, categoryId: ID!): Any!
+  deleteCategory(id: ID!): Any!
+  addProduct(product: InputProduct!): Any!
+  editProduct(product: InputProduct!, productId: ID!): Any!
+  deleteProduct(id: ID!): Any!
 }

@@ -3,6 +3,7 @@ package middlewares
 import (
 	"context"
 	"goapi/service"
+	"log"
 	"net/http"
 )
 
@@ -29,9 +30,13 @@ func AuthMiddleware(next http.Handler) http.Handler {
 		}
 
 		customClaim, _ := validate.Claims.(*service.JwtCustomClaim)
-
+		log.Print(customClaim)
 		ctx := context.WithValue(r.Context(), authString("auth"), customClaim)
-
+		tokenStr := ctx.Value(authString("auth"))
+		log.Println("Token get ....")
+		log.Print(tokenStr)
+		log.Print(customClaim.ID)
+		log.Print(customClaim.Id)
 		r = r.WithContext(ctx)
 		next.ServeHTTP(w, r)
 	})

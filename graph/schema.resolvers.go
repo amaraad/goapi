@@ -47,7 +47,7 @@ func (r *mutationResolver) DeleteProduct(ctx context.Context, id int64) (interfa
 }
 
 func (r *queryResolver) User(ctx context.Context, id int64) (*model.User, error) {
-	return service.UserGetByID(ctx, string(id))
+	return service.UserGetByID(ctx, id)
 }
 
 func (r *queryResolver) Protected(ctx context.Context) (string, error) {

@@ -27,7 +27,7 @@ func UserCreate(ctx context.Context, input model.InputUser) (*model.User, error)
 	return &user, nil
 }
 
-func UserGetByID(ctx context.Context, id string) (*model.User, error) {
+func UserGetByID(ctx context.Context, id int64) (*model.User, error) {
 	db := config.GetDB()
 
 	var user model.User

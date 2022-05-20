@@ -4,6 +4,7 @@ import (
 	"context"
 	"goapi/graph/model"
 	"goapi/tools"
+	"log"
 
 	"github.com/vektah/gqlparser/v2/gqlerror"
 	"gorm.io/gorm"
@@ -49,7 +50,8 @@ func UserLogin(ctx context.Context, email string, password string) (interface{},
 	if err := tools.ComparePassword(getUser.Password, password); err != nil {
 		return nil, err
 	}
-
+	log.Print("Get User ...")
+	log.Print(getUser.ID)
 	token, err := JwtGenerate(ctx, string(getUser.ID))
 	if err != nil {
 		return nil, err

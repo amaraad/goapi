@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"fmt"
+	"log"
 	"os"
 	"time"
 
@@ -25,6 +26,8 @@ func getJwtSecret() string {
 }
 
 func JwtGenerate(ctx context.Context, userID string) (string, error) {
+	log.Print("Generate user id ...")
+	log.Print(userID)
 	t := jwt.NewWithClaims(jwt.SigningMethodHS256, &JwtCustomClaim{
 		ID: userID,
 		StandardClaims: jwt.StandardClaims{

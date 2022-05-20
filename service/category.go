@@ -46,8 +46,8 @@ func DeleteCategory(ctx context.Context, id int64) (interface{}, error) {
 }
 
 func Categories(ctx context.Context, search *string) ([]*model.Category, error) {
-	tokenStr := CtxValue(ctx)
-	log.Print(&tokenStr)
+	tokenStr := ctx.Value(authString("auth"))
+	log.Print(tokenStr)
 	db := config.GetDB()
 	var categories []*model.Category
 	if search != nil {
